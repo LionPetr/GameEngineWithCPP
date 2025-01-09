@@ -30,8 +30,10 @@ void AppWindow::onCreate()
 	vertex list[] =
 	{
 		{-0.5f, -0.5f, 0.0},
-		{0.0f, 0.5f, 0.0},
+		{-0.5f, 0.5f, 0.0},
 		{0.5f, -0.5f, 0.0},
+		{ 0.5f, 0.5f, 0.0 }
+		
 
 	};
 
@@ -58,7 +60,7 @@ void AppWindow::onUpdate()
 
 	GraphicsEngine::get()->getImmidiateDeviceContext()->setVertexBuffer(m_vb);
 
-	GraphicsEngine::get()->getImmidiateDeviceContext()->drawTriangleList(m_vb->getSizeVertexList(), 0);
+	GraphicsEngine::get()->getImmidiateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
 	m_swap_chain->present(false);
 }
 
