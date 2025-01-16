@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include "Vector3D.h"
 #include "Matrix4x4.h"
+#include "InputSystem.h"
+
 
 struct vertex
 {
@@ -53,15 +55,15 @@ void AppWindow::updateQuadPosition()
 	cc.m_world.setScale(Vector3D(1, 1, 1));
 
 	temp.setIdentity();
-	temp.setRoationZ(m_delta_scale);
+	temp.setRoationZ(0.0f);
 	cc.m_world *= temp;
 
 	temp.setIdentity();
-	temp.setRoationY(m_delta_scale);
+	temp.setRoationY(m_rot_y);
 	cc.m_world *= temp;
 
 	temp.setIdentity();
-	temp.setRoationX(m_delta_scale);
+	temp.setRoationX(m_rot_x);
 	cc.m_world *= temp;
 
 
@@ -88,6 +90,9 @@ AppWindow::~AppWindow()
 void AppWindow::onCreate()
 {
 	Window::onCreate();
+
+	InputSystem::get()->addListener(this);
+
 	GraphicsEngine::get()->init();
 	m_swap_chain = GraphicsEngine::get()->createSwapChain();
 
@@ -166,6 +171,9 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
+
+	InputSystem::get()->update();
+
 	GraphicsEngine::get()->getImmidiateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 1, 0, 0, 1);
 
 	RECT rc = this->getClientWindowRect();
@@ -203,4 +211,29 @@ void AppWindow::onDestroy()
 	m_vs->release();
 	m_ps->release();
 	GraphicsEngine::get()->release();
+}
+
+void AppWindow::onKeyDown(int key)
+{
+
+}
+
+void AppWindow::onKeyUp(int key)
+{
+	if (key == 'W')
+	{
+		m_rot_x += 3.14f * m_delta_time;
+	}
+	else if (key == 'S')
+	{
+		m_rot_x -= 3.14f * m_delta_time;
+	}
+	else if (key == 'A')
+	{
+		m_rot_y += 3.14f * m_delta_time;
+	}
+	else if (key == 'D')
+	{
+		m_rot_y -= 3.14f * m_delta_time;
+	}
 }
