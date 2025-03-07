@@ -84,7 +84,11 @@ VertexBufferPtr RenderSystem::createVertexBuffer(void* list_vertices, UINT size_
 	{
 		vb = std::make_shared<VertexBuffer>(list_vertices, size_vertex, size_list, shader_byte_code, size_byte_shader, this);
 	}
-	catch (...) {}
+	catch (...) 
+	{
+		throw std::exception("Vertex buffer not created successfully");
+		return nullptr;
+	}
 	return vb;
 }
 

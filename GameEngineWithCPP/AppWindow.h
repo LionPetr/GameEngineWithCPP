@@ -46,6 +46,8 @@ private:
 	ConstantBufferPtr m_cb;
 	IndexBufferPtr m_ib;
 	TexturePtr m_wood_tex;
+	MeshPtr m_mesh;
+
 
 	float m_old_delta;
 	float m_new_delta;
